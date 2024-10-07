@@ -5,17 +5,45 @@
   npx create-react-app react-demo --template typescript
   ```
 
-
-## Config Tailwind CSS
+## Config Tailwind CSS & PostCSS
 
 - Install Tailwind CSS
+
   ```
-      yarn add tailwindcss -d
+      yarn add tailwindcss postcss autoprefixer -d
       npx tailwindcss init
   ```
+
+- Add config to `postcss.config.js`
+
+  ```
+      module.exports = {
+          plugins: {
+              tailwindcss: {},
+              autoprefixer: {},
+          },
+      }
+  ```
+
 - Add config to `tailwind.config.js`
 
+  ```
+      module.exports = {
+          content: [
+              "./src/**/*.{js,jsx,ts,tsx}",
+          ],
+          theme: {
+              extend: {},
+          },
+      }
+  ```
+
 - Add the Tailwind directives to CSS
+  ```
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
+  ```
 
 ## Config alias
 
@@ -62,27 +90,53 @@
   ```
 
 ## Config eslint & pretter
+
 - Install eslint
-    ```
-        yarn add eslint --dev
-    ```
+
+  ```
+      yarn add eslint --dev
+  ```
 
 - Init eslint
-    ```
-        yarn run eslint --init
-    ```
+
+  ```
+      yarn run eslint --init
+  ```
 
 - Add config in file `.eslintrc.js`
 
 - Install pretter
-    ```
-        yarn add eslint-config-prettier eslint-plugin-prettier prettier --dev
-    ```
+  ```
+      yarn add eslint-config-prettier eslint-plugin-prettier prettier --dev
+  ```
 - Create file `.prettierrc`
 
 ## Config env (env-cmd)
 
 ## Router (react-router-dom v6)
+
+- Install
+
+  ```
+      yarn add react-router-dom
+  ```
+
+- Init routers
+
+  ```
+      const router = createBrowserRouter([
+          {
+              path: "/",
+              element: <App />,
+          },
+      ]);
+  ```
+
+- Config router in `index.tsx`
+
+  ```
+      <RouterProvider router={router} />
+  ```
 
 ## Custom API
 
