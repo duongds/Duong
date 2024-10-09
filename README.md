@@ -113,6 +113,8 @@
 
 ## Config env (env-cmd)
 
+## Redux
+
 ## Router (react-router-dom v6)
 
 - Install
@@ -139,8 +141,6 @@
   ```
 
 ## Custom API
-
-## Redux
 
 ## Common
 
