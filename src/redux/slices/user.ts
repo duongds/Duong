@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { getUserInfoAPI } from '@/api/users'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserState {
   profile: any
@@ -16,6 +17,16 @@ export const userSlices = createSlice({
       state.profile = action.payload
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getUserInfoAC.fulfilled, (state, action) => {
+      state.profile = action.payload
+    })
+  },
+})
+
+export const getUserInfoAC = createAsyncThunk('user/fetchUserProfile', async () => {
+  const response = await getUserInfoAPI()
+  return response.data
 })
 
 // Action creators are generated for each case reducer function

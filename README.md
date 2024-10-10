@@ -113,7 +113,64 @@
 
 ## Config env (env-cmd)
 
-## Redux
+## Common
+
+## Redux (reduxjs/toolkit )
+
+- Install
+
+  ```
+      yarn add @reduxjs/toolkit react-redux
+  ```
+
+- Create file `store.ts`
+
+  ```
+      export const store = configureStore({
+          reducer: rootReducer,
+          middleware: (getDefaultMiddleware) =>
+          getDefaultMiddleware({
+              serializableCheck: false,
+          }),
+      })
+  ```
+
+- Add provider in `index.tsx`
+
+  ```
+      <Provider store={store}>
+          <App />
+      </Provider>
+  ```
+
+- Create slice
+
+  ```
+      export const userSlices = createSlice({
+          name: 'user',
+          initialState,
+          reducers: {
+              setProfile: (state, action: PayloadAction<boolean>) => {
+                  state.profile = action.payload
+              },
+          },
+      })
+  ```
+
+- Add reducer to store
+
+  ```
+      export const { setProfile } = userSlices.actions
+      export default userSlices.reducer
+  ```
+
+- Use reducer in component
+
+  ```
+      const dispatch = useDispatch();
+      const count = useSelector(state => state.counter.value);
+      <button onClick={() => dispatch(increment())}>Increment</button>
+  ```
 
 ## Router (react-router-dom v6)
 
@@ -142,6 +199,4 @@
 
 ## Custom API
 
-## Common
-
-## Multi language
+## Multi language (react-intl)

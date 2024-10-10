@@ -5,12 +5,13 @@ import BasicInput from '@/components/common/BasicInput'
 import { Link } from '@mui/material'
 import BasicButton from '@/components/common/BasicButton'
 import { FormError } from '@/interfaces/common'
-import { getUserInfoAPI, login } from '@/api/users'
+import { login } from '@/api/users'
 import { CLIENT_ID } from '@/constants/common'
-import { saveAuthenInfo, saveUserInfo } from '@/utils/user'
+import { saveAuthenInfo } from '@/utils/user'
 import { useNavigate } from 'react-router-dom'
 import { setToast } from '@/redux/slices/common'
-import { useDispatch } from 'react-redux'
+import { getUserInfoAC } from '@/redux/slices/user'
+import { useAppDispatch } from '@/redux/hooks'
 
 interface LoginData {
   username: string
@@ -24,7 +25,7 @@ interface LoginError {
 
 const Login = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const [data, setData] = useState<LoginData>({
     username: '',
@@ -59,9 +60,7 @@ const Login = () => {
           ...data,
           ...res.data,
         })
-
-        const userRes = await getUserInfoAPI()
-        saveUserInfo(userRes.data)
+        dispatch(getUserInfoAC())
 
         dispatch(setToast({ message: 'Đăng nhập thành công', type: 'success', show: true }))
         navigate('/')
@@ -108,7 +107,7 @@ const Login = () => {
               label={'Mật khẩu'}
               type={'password'}
               name={'password'}
-              autoComplete="new-password"
+              // autoComplete="new-password"
               showIconPassword={true}
               value={data.password}
               onChange={(event) => onChangeData('password', event.target.value)}

@@ -3,10 +3,13 @@ import React, { MouseEventHandler, useState } from 'react'
 import ListIcon from '@mui/icons-material/List'
 import avatar from '@/assets/images/avatar-dragon.webp'
 import Menus from '@/components/common/Menu'
+import IntlDropdown from './IntlDropdown'
+import { useAppSelector } from '@/redux/hooks'
 
 const LayoutHeader = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [modal, setModal] = useState<boolean>(false)
+  const user = useAppSelector((state) => state.user.profile)
 
   const open = Boolean(anchorEl)
 
@@ -35,7 +38,8 @@ const LayoutHeader = () => {
       >
         <Menus />
       </Drawer>
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-center justify-end space-x-3">
+        <IntlDropdown />
         <div className="flex flex-row items-center">
           <div className="flex lg:hidden">
             <IconButton
@@ -53,7 +57,7 @@ const LayoutHeader = () => {
             <button className="flex gap-[10px] items-center cursor-pointer" onClick={handleClick}>
               <Avatar src={avatar} sx={{ width: 32, height: 32 }} />
               <div className="text-black text-14-20">
-                <p className="font-inter-700 text-left">Nguyen Van A</p>
+                <p className="font-inter-700 text-left">{user?.name}</p>
                 <p className="font-inter-500 text-left">Chuyên gia thử rượu</p>
               </div>
             </button>
