@@ -200,3 +200,25 @@
 ## Custom API
 
 ## Multi language (react-intl)
+
+- Install
+
+  ```
+      yarn add react-intl
+  ```
+
+- Create file `[language].json`
+
+- Create file `IntlContext.tsx`
+
+- Add dropdown language in `LayoutHeader.tsx`
+
+  ```
+      <IntlDropdown />
+  ```
+
+- Use in component with `FormattedMessage`
+
+  ```
+      <FormattedMessage id="page1" defaultMessage="Page 1" />
+  ```

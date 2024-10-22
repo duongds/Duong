@@ -5,6 +5,7 @@ import avatar from '@/assets/images/avatar-dragon.webp'
 import Menus from '@/components/common/Menu'
 import IntlDropdown from './IntlDropdown'
 import { useAppSelector } from '@/redux/hooks'
+import { logOut } from '@/utils/user'
 
 const LayoutHeader = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -23,7 +24,7 @@ const LayoutHeader = () => {
 
   const handleLogout = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault()
-    // logOut()
+    logOut()
   }
 
   return (
