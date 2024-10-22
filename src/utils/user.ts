@@ -1,26 +1,32 @@
-import { saveCookie } from '@/utils/common'
-import { AUTHEN_INFO_COOKIE, USER_INFO_COOKIE } from '@/constants/common'
+import { saveCookie, saveToLocalStorage } from '@/utils/common'
+import { REFRESH_TOKEN_COOKIE, TOKEN_COOKIE, USER_INFO } from '@/constants/common'
 import Cookies from 'universal-cookie'
 
-export const getAuthenInfo = () => {
+export const getToken = () => {
   const cookies = new Cookies()
-  return cookies.get(AUTHEN_INFO_COOKIE)
+  return cookies.get(TOKEN_COOKIE)
+}
+
+export const getRefreshToken = () => {
+  const cookies = new Cookies()
+  return cookies.get(REFRESH_TOKEN_COOKIE)
 }
 
 export const saveAuthenInfo = (data: {
-  username: string
-  password: string
   accessToken: string
-  refreshToken: string
+  refreshToken?: string
   expireIn: number
   tokenType?: string
 }) => {
-  saveCookie(AUTHEN_INFO_COOKIE, data)
-  return data
+  saveCookie(TOKEN_COOKIE, data.accessToken)
+  if (data.refreshToken) {
+    saveCookie('refreshToken', data.refreshToken)
+  }
 }
+
 export const getUserInfo = () => {
-  const cookies = new Cookies()
-  return cookies.get(USER_INFO_COOKIE)
+  const userInfo = localStorage.getItem(USER_INFO)
+  return userInfo ? JSON.parse(userInfo) : null
 }
 
 export const saveUserInfo = (data: {
@@ -30,12 +36,18 @@ export const saveUserInfo = (data: {
   phone: string
   status: string
 }) => {
-  saveCookie(USER_INFO_COOKIE, data)
+  saveToLocalStorage(USER_INFO, data)
   return data
 }
 
 export async function logOut() {
   const cookies = new Cookies()
-  cookies.remove(AUTHEN_INFO_COOKIE)
+  cookies.remove(TOKEN_COOKIE)
+  cookies.remove(REFRESH_TOKEN_COOKIE)
   window.location.href = '/login'
+}
+
+export const createNewCookie = (nameUser: string, value: string) => {
+  const cookies = new Cookies()
+  cookies.set(nameUser, value, { path: '/', secure: true })
 }

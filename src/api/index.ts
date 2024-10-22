@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getAuthenInfo, logOut, saveAuthenInfo } from '@/utils/user'
+import { getRefreshToken, getToken, logOut, saveAuthenInfo } from '@/utils/user'
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_SERVICE_URL,
@@ -28,9 +28,9 @@ api.defaults.headers.post['Content-Type'] = 'application/json'
 // request api
 api.interceptors.request.use(
   async function (config) {
-    const user: any = getAuthenInfo()
-    if (user?.accessToken && config && config.headers) {
-      config.headers.Authorization = 'Bearer ' + user.accessToken
+    const token: any = getToken()
+    if (token && config && config.headers) {
+      config.headers.Authorization = 'Bearer ' + token
     }
     config.headers.tcode = 'tms'
     return config
@@ -48,8 +48,7 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config
     if (error.response && (error?.response?.status === 401 || error?.response?.statusCode === 401)) {
-      const user: any = getAuthenInfo()
-      const { refreshToken } = user
+      const refreshToken: any = getRefreshToken()
       if (error.config.url.indexOf('refresh-token') !== -1) {
         logout()
       }
@@ -64,7 +63,7 @@ api.interceptors.response.use(
             })
             const { data } = res.data
             isRefreshing = false
-            saveAuthenInfo({ ...user, ...data })
+            saveAuthenInfo(data)
             onRrefreshed(data.accessToken)
             return new Promise((resolve) => {
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.accessToken

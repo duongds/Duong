@@ -59,7 +59,7 @@ const LayoutHeader = () => {
               <Avatar src={avatar} sx={{ width: 32, height: 32 }} />
               <div className="text-black text-14-20">
                 <p className="font-inter-700 text-left">{user?.name}</p>
-                <p className="font-inter-500 text-left">Chuyên gia thử rượu</p>
+                <p className="font-inter-500 text-left">Demo 001</p>
               </div>
             </button>
             <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>

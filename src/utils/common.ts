@@ -24,6 +24,10 @@ export function saveCookie(key: string, value: unknown) {
   })
 }
 
+export function saveToLocalStorage(key: string, value: unknown) {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
 export const stringNoSign = (str: string) => {
   if (str) {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a')

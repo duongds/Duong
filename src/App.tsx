@@ -5,17 +5,17 @@ import router from '@/routes'
 import BasicToast from '@/components/common/BasicToast'
 import { getUserInfoAC } from './redux/slices/user'
 import { useAppDispatch } from './redux/hooks'
-import { getAuthenInfo } from './utils/user'
+import { getToken } from './utils/user'
 
 function App() {
   const dispatch = useAppDispatch()
-  const user: any = getAuthenInfo()
+  const token: any = getToken()
 
   useEffect(() => {
-    if (user?.accessToken) {
+    if (token) {
       dispatch(getUserInfoAC())
     }
-  }, [user])
+  }, [token])
 
   return (
     <>
