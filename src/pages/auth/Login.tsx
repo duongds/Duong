@@ -5,12 +5,11 @@ import BasicInput from '@/components/common/BasicInput'
 import { Link } from '@mui/material'
 import BasicButton from '@/components/common/BasicButton'
 import { FormError } from '@/interfaces/common'
-import { login } from '@/api/users'
+import { login } from 'src/api/users'
 import { CLIENT_ID } from '@/constants/common'
 import { saveAuthenInfo } from '@/utils/user'
 import { useNavigate } from 'react-router-dom'
 import { setToast } from '@/redux/slices/common'
-import { getUserInfoAC } from '@/redux/slices/user'
 import { useAppDispatch } from '@/redux/hooks'
 
 interface LoginData {
@@ -56,11 +55,7 @@ const Login = () => {
       if (res.data) {
         delete res.data.password
         if (!rememberMe) delete res.data.refreshToken
-        saveAuthenInfo({
-          ...data,
-          ...res.data,
-        })
-        dispatch(getUserInfoAC())
+        saveAuthenInfo(res.data)
 
         dispatch(setToast({ message: 'Đăng nhập thành công', type: 'success', show: true }))
         navigate('/')

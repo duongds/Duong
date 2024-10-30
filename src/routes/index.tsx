@@ -4,15 +4,15 @@ import Login from '@/pages/auth/Login'
 import { createBrowserRouter, LoaderFunctionArgs, Navigate, redirect } from 'react-router-dom'
 import React from 'react'
 import Page1 from '@/pages/Page1'
-import { getAuthenInfo } from '@/utils/user'
+import { getToken } from '@/utils/user'
 
 // eslint-disable-next-line
 function protectedLoader({ request }: LoaderFunctionArgs) {
   // If the user is not logged in and tries to access protected router, we redirect
   // them to `/login` with a `from` parameter that allows login to redirect back
   // to this page upon successful authentication
-  const userInfo = getAuthenInfo()
-  if (!userInfo) {
+  const token = getToken()
+  if (!token) {
     return redirect('/login')
   }
   return null
@@ -36,8 +36,8 @@ const router = createBrowserRouter([
     path: '/login',
     element: <Login />,
     loader: () => {
-      const userInfo = getAuthenInfo()
-      if (userInfo) {
+      const token = getToken()
+      if (token) {
         return redirect('/page1')
       }
       return null

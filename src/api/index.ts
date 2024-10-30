@@ -70,15 +70,6 @@ api.interceptors.response.use(
               originalRequest.headers['Authorization'] = 'Bearer ' + data.accessToken
               resolve(api(originalRequest))
             })
-            //   .catch((err) => {
-            //   if (err.response.data.statusCode === 401) {
-            //     throw {
-            //       message: 'You cannot edit this field in view-only mode.',
-            //     }
-            //   } else {
-            //     throw err
-            //   }
-            // })
           } catch (error) {
             logout()
           }

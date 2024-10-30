@@ -4,13 +4,15 @@ import ListIcon from '@mui/icons-material/List'
 import avatar from '@/assets/images/avatar-dragon.webp'
 import Menus from '@/components/common/Menu'
 import IntlDropdown from './IntlDropdown'
-import { useAppSelector } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { logOut } from '@/utils/user'
+import { setProfile } from '@/redux/slices/user'
 
 const LayoutHeader = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [modal, setModal] = useState<boolean>(false)
   const user = useAppSelector((state) => state.user.profile)
+  const dispatch = useAppDispatch()
 
   const open = Boolean(anchorEl)
 
@@ -25,6 +27,7 @@ const LayoutHeader = () => {
   const handleLogout = (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault()
     logOut()
+    dispatch(setProfile({}))
   }
 
   return (
